@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <PackageId>API.Helpers.Utilities</PackageId>
-    <Version>6.0.8</Version>
+    <Version>6.0.9</Version>
     <Authors>khanhvuongnh</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
