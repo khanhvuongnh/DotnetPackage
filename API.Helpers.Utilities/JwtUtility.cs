@@ -84,7 +84,7 @@ public class JwtUtility : IJwtUtility
 public class RefreshToken
 {
     [Key]
-    public int ID { get; set; }
+    public int Token_ID { get; set; }
     public string Token { get; set; }
     public DateTime Expires { get; set; }
     public DateTime CreatedTime { get; set; }
@@ -92,6 +92,9 @@ public class RefreshToken
     public string ReplacedByToken { get; set; }
     public string ReasonRevoked { get; set; }
     [Required]
-    [StringLength(10)]
+    [StringLength(50)]
     public string Username { get; set; }
+    public bool IsExpired => DateTime.UtcNow >= Expires;
+    public bool IsRevoked => RevokedTime != null;
+    public bool IsActive => !IsRevoked && !IsExpired;
 }
