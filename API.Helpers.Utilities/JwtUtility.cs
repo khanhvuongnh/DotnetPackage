@@ -74,7 +74,7 @@ public class JwtUtility : IJwtUtility
         {
             Token = Convert.ToBase64String(randomBytes),
             Expires = expires,
-            CreatedTime = DateTime.Now,
+            CreatedTime = DateTime.UtcNow,
             Username = username
         };
         return refreshToken;
