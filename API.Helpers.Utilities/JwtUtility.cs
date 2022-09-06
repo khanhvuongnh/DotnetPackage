@@ -94,7 +94,7 @@ public class RefreshToken
     [Required]
     [StringLength(50)]
     public string Username { get; set; }
-    public bool IsExpired => DateTime.Now >= Expires;
+    public bool IsExpired => DateTime.UtcNow >= Expires;
     public bool IsRevoked => RevokedTime != null;
     public bool IsActive => !IsRevoked && !IsExpired;
 }
