@@ -86,13 +86,11 @@ public class MailUtility : IMailUtility
             {
                 if (file.Length > 0)
                 {
-                    using (var ms = new MemoryStream())
-                    {
-                        file.CopyTo(ms);
-                        var fileBytes = ms.ToArray();
-                        var att = new Attachment(new MemoryStream(fileBytes), file.FileName);
-                        mail.Attachments.Add(att);
-                    }
+                    using var ms = new MemoryStream();
+                    file.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+                    var att = new Attachment(new MemoryStream(fileBytes), file.FileName);
+                    mail.Attachments.Add(att);
                 }
             }
         }

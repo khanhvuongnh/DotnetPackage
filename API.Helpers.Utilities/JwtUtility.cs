@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 
 namespace API.Helpers.Utilities;
+
 public interface IJwtUtility
 {
     public string GenerateJwtToken(Claim[] claims, string secretKey, DateTime expires);
@@ -35,16 +36,20 @@ public class JwtUtility : IJwtUtility
         };
         var tokenHandler = new JwtSecurityTokenHandler();
         var token = tokenHandler.CreateToken(tokenDescriptor);
+
         return tokenHandler.WriteToken(token);
     }
 
     public string ValidateJwtToken(string token, string secretKey, string claimType = "nameid")
     {
         if (token == null)
+        {
             return null;
+        }
 
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(secretKey);
+
         try
         {
             tokenHandler.ValidateToken(token, new TokenValidationParameters
@@ -57,6 +62,7 @@ public class JwtUtility : IJwtUtility
             }, out SecurityToken validatedToken);
             var jwtToken = (JwtSecurityToken)validatedToken;
             var username = jwtToken.Claims.First(x => x.Type == claimType).Value;
+
             return username;
         }
         catch
@@ -77,6 +83,7 @@ public class JwtUtility : IJwtUtility
             CreatedTime = DateTime.UtcNow,
             Username = username
         };
+
         return refreshToken;
     }
 }

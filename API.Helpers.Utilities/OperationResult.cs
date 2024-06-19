@@ -1,13 +1,13 @@
 namespace API.Helpers.Utilities;
-public class OperationResult
+
+public class OperationResult<T>
 {
     public string Error { set; get; }
     public bool IsSuccess { set; get; }
-    public object Data { set; get; }
+    public T Data { set; get; }
 
     public OperationResult()
     {
-
     }
 
     public OperationResult(string error)
@@ -20,7 +20,7 @@ public class OperationResult
         this.IsSuccess = isSuccess;
     }
 
-    public OperationResult(object data)
+    public OperationResult(T data)
     {
         this.Data = data;
     }
@@ -31,19 +31,19 @@ public class OperationResult
         this.IsSuccess = isSuccess;
     }
 
-    public OperationResult(bool isSuccess, object data)
+    public OperationResult(bool isSuccess, T data)
     {
         this.IsSuccess = isSuccess;
         this.Data = data;
     }
 
-    public OperationResult(string error, object data)
+    public OperationResult(string error, T data)
     {
         this.Error = error;
         this.Data = data;
     }
 
-    public OperationResult(bool isSuccess, string error, object data)
+    public OperationResult(bool isSuccess, string error, T data)
     {
         this.Error = error;
         this.IsSuccess = isSuccess;

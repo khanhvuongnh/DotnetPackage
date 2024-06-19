@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
 
 namespace API.Helpers.Utilities;
+
 public interface IFunctionUtility
 {
     Task<string> UploadAsync(IFormFile file, string subfolder, string rawFileName);
@@ -17,25 +18,35 @@ public class FunctionUtility : IFunctionUtility
     public async Task<string> UploadAsync(IFormFile file, string subfolder, string rawFileName)
     {
         if (file == null)
+        {
             return null;
+        }
 
         var folderPath = Path.Combine(webRootPath, subfolder);
         var fileName = file.FileName;
         var extension = Path.GetExtension(file.FileName);
 
         if (string.IsNullOrEmpty(extension))
+        {
             return null;
+        }
 
         if (!Directory.Exists(folderPath))
+        {
             Directory.CreateDirectory(folderPath);
+        }
 
         if (!string.IsNullOrEmpty(rawFileName))
+        {
             fileName = $"{rawFileName}{extension}";
+        }
 
         var filePath = Path.Combine(folderPath, fileName);
 
         if (File.Exists(filePath))
+        {
             File.Delete(filePath);
+        }
 
         try
         {
@@ -47,7 +58,7 @@ public class FunctionUtility : IFunctionUtility
 
             return fileName;
         }
-        catch (System.Exception)
+        catch (Exception)
         {
             return null;
         }
@@ -56,26 +67,36 @@ public class FunctionUtility : IFunctionUtility
     public async Task<string> UploadAsync(string file, string subfolder, string rawFileName)
     {
         if (string.IsNullOrEmpty(file))
+        {
             return null;
+        }
 
         var folderPath = Path.Combine(webRootPath, subfolder);
         var extension = $".{file.Split(';')[0].Split('/')[1]}";
 
         if (string.IsNullOrEmpty(extension))
+        {
             return null;
+        }
 
         var fileName = $"{Guid.NewGuid().ToString()}{extension}";
 
         if (!Directory.Exists(folderPath))
+        {
             Directory.CreateDirectory(folderPath);
+        }
 
         if (!string.IsNullOrEmpty(rawFileName))
+        {
             fileName = $"{rawFileName}{extension}";
+        }
 
         var filePath = Path.Combine(folderPath, fileName);
 
         if (File.Exists(filePath))
+        {
             File.Delete(filePath);
+        }
 
         var base64String = file.Substring(file.IndexOf(',') + 1);
         var fileData = Convert.FromBase64String(base64String);
@@ -83,41 +104,44 @@ public class FunctionUtility : IFunctionUtility
         try
         {
             await File.WriteAllBytesAsync(filePath, fileData);
+            
             return fileName;
         }
-        catch (System.Exception)
+        catch (Exception)
         {
             return null;
         }
     }
 
-    private static readonly string[] VietNamChar = new string[]
-      {
-            "aAeEoOuUiIdDyY",
-            "áàạảãâấầậẩẫăắằặẳẵ",
-            "ÁÀẠẢÃÂẤẦẬẨẪĂẮẰẶẲẴ",
-            "éèẹẻẽêếềệểễ",
-            "ÉÈẸẺẼÊẾỀỆỂỄ",
-            "óòọỏõôốồộổỗơớờợởỡ",
-            "ÓÒỌỎÕÔỐỒỘỔỖƠỚỜỢỞỠ",
-            "úùụủũưứừựửữ",
-            "ÚÙỤỦŨƯỨỪỰỬỮ",
-            "íìịỉĩ",
-            "ÍÌỊỈĨ",
-            "đ",
-            "Đ",
-            "ýỳỵỷỹ",
-            "ÝỲỴỶỸ"
-      };
+    private static readonly string[] VietnameseChars =
+    [
+        "aAeEoOuUiIdDyY",
+        "áàạảãâấầậẩẫăắằặẳẵ",
+        "ÁÀẠẢÃÂẤẦẬẨẪĂẮẰẶẲẴ",
+        "éèẹẻẽêếềệểễ",
+        "ÉÈẸẺẼÊẾỀỆỂỄ",
+        "óòọỏõôốồộổỗơớờợởỡ",
+        "ÓÒỌỎÕÔỐỒỘỔỖƠỚỜỢỞỠ",
+        "úùụủũưứừựửữ",
+        "ÚÙỤỦŨƯỨỪỰỬỮ",
+        "íìịỉĩ",
+        "ÍÌỊỈĨ",
+        "đ",
+        "Đ",
+        "ýỳỵỷỹ",
+        "ÝỲỴỶỸ"
+    ];
 
     public string RemoveUnicode(string text)
     {
-        for (int i = 1; i < VietNamChar.Length; i++)
+        for (int i = 1; i < VietnameseChars.Length; i++)
         {
-            for (int j = 0; j < VietNamChar[i].Length; j++)
-                text = text.Replace(VietNamChar[i][j], VietNamChar[0][i - 1]);
+            for (int j = 0; j < VietnameseChars[i].Length; j++)
+                text = text.Replace(VietnameseChars[i][j], VietnameseChars[0][i - 1]);
         }
+        
         text = Regex.Replace(text, "[^0-9a-zA-Z]+", " ").ToLower();
+        
         return text;
     }
 }

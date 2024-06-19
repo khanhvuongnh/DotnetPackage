@@ -8,6 +8,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IFunctionUtility, FunctionUtility>();
         services.AddScoped<IJwtUtility, JwtUtility>();
         services.AddScoped<IMailUtility, MailUtility>();
+        
         return services;
     }
 }

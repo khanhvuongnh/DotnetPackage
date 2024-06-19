@@ -2,13 +2,14 @@ using Aspose.Cells;
 using Aspose.Cells.Drawing;
 
 namespace API.Helpers.Utilities;
+
 public static class AsposeUtility
 {
     public static void SetLicense(string filePath)
     {
         try
         {
-            var cellsLicense = new Aspose.Cells.License();
+            var cellsLicense = new License();
             cellsLicense.SetLicense(filePath);
         }
         catch (Exception)
@@ -23,6 +24,7 @@ public static class AsposeUtility
         style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
         style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
         style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+        
         return style;
     }
 
@@ -31,6 +33,7 @@ public static class AsposeUtility
         style.IsTextWrapped = true;
         style.HorizontalAlignment = TextAlignmentType.Center;
         style.VerticalAlignment = TextAlignmentType.Center;
+        
         return style;
     }
 
@@ -39,10 +42,12 @@ public static class AsposeUtility
         var originWidth = picture.Width;
         var originHeight = picture.Height;
         var customHeight = (int)(originHeight * customWidth / originWidth);
+        
         picture.Top = 5;
         picture.Left = 5;
         picture.Width = customWidth;
         picture.Height = customHeight;
+        
         return picture;
     }
 }
