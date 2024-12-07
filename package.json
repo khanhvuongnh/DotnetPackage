@@ -1,0 +1,12 @@
+{
+  "name": "api.helpers.utilities",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build-ahu": "dotnet build",
+    "publish-ahu": "cd .\\API.Helpers.Utilities\\bin\\Debug && dotnet nuget push --api-key oy2csdraum4onhgzgtuajkjpgtu5uawulae6zvlg7omwaq --source https://api.nuget.org/v3/index.json \"*.nupkg\" --skip-duplicate"
+  },
+  "author": "Vuong.Nguyen",
+  "license": "ISC",
+  "description": ""
+}

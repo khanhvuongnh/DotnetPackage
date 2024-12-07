@@ -2,51 +2,71 @@ namespace API.Helpers.Utilities;
 
 public class OperationResult<T>
 {
-    public string Error { set; get; }
-    public bool IsSuccess { set; get; }
+    public string Message { set; get; }
+    public bool Succeeded { set; get; }
     public T Data { set; get; }
 
     public OperationResult()
     {
     }
 
-    public OperationResult(string error)
+    public OperationResult(string message)
     {
-        this.Error = error;
+        Message = message;
     }
 
-    public OperationResult(bool isSuccess)
+    public OperationResult(bool succeeded)
     {
-        this.IsSuccess = isSuccess;
+        Succeeded = succeeded;
     }
 
     public OperationResult(T data)
     {
-        this.Data = data;
+        Data = data;
     }
 
-    public OperationResult(bool isSuccess, string error)
+    public OperationResult(bool succeeded, string message)
     {
-        this.Error = error;
-        this.IsSuccess = isSuccess;
+        Message = message;
+        Succeeded = succeeded;
     }
 
-    public OperationResult(bool isSuccess, T data)
+    public OperationResult(bool succeeded, T data)
     {
-        this.IsSuccess = isSuccess;
-        this.Data = data;
+        Succeeded = succeeded;
+        Data = data;
     }
 
-    public OperationResult(string error, T data)
+    public OperationResult(string message, T data)
     {
-        this.Error = error;
-        this.Data = data;
+        Message = message;
+        Data = data;
     }
 
-    public OperationResult(bool isSuccess, string error, T data)
+    public OperationResult(bool succeeded, string message, T data)
     {
-        this.Error = error;
-        this.IsSuccess = isSuccess;
-        this.Data = data;
+        Message = message;
+        Succeeded = succeeded;
+        Data = data;
+    }
+
+    public static OperationResult<T> ErrorResult(string message)
+    {
+        return new OperationResult<T>(false, message);
+    }
+
+    public static OperationResult<T> ErrorResult(string message, T data)
+    {
+        return new OperationResult<T>(false, message, data);
+    }
+
+    public static OperationResult<T> SuccessResult(string message)
+    {
+        return new OperationResult<T>(true, message);
+    }
+
+    public static OperationResult<T> SuccessResult(string message, T data)
+    {
+        return new OperationResult<T>(true, message, data);
     }
 }
